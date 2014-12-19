@@ -1,7 +1,6 @@
 {
   "name": "jqrange-slider",
   "main": "jQRangeSlider.js",
-  "version": "5.7.0",
   "homepage": "https://github.com/cthrax/jQRangeSlider",
   "authors": [
     "Myles Bostwick <github@zithora.com>"
