@@ -31,6 +31,54 @@ module.exports = function(grunt) {
     clean: {
       filesSrc: ["dest/"]
     },
+    concat: {
+      options: {
+        banner: '/*! <%= pkg.name %> <%= pkg.version %> - ' +
+        '<%= grunt.template.today("yyyy-mm-dd") %> - ' +
+        'Copyright (C) Guillaume Gautreau 2012 - '+
+        'MIT and GPLv3 licenses.*/'
+      },
+      basic: {
+        files: {
+          'dest/jQRangeSlider.js': coreFiles
+        }
+      },
+      basicRuler: {
+        files: {
+          'dest/jQRangeSlider-withRuler.js': coreFiles.concat(rulerFiles)
+        }
+      },
+      date: {
+        files: {
+          'dest/jQDateRangeSlider.js': coreFiles.concat(dateFiles)
+        }
+      },
+      dateRuler: {
+        files: {
+          'dest/jQDateRangeSlider-withRuler.js': coreFiles.concat(dateFiles).concat(rulerFiles)
+        }
+      },
+      edit: {
+        files: {
+          'dest/jQEditRangeSlider.js': coreFiles.concat(editFiles)
+        }
+      },
+      editRuler: {
+        files: {
+          'dest/jQEditRangeSlider-withRuler.js': coreFiles.concat(editFiles).concat(rulerFiles)
+        }
+      },
+      all: {
+        files: {
+          'dest/jQAllRangeSliders.js': coreFiles.concat(dateFiles).concat(editFiles)
+        }
+      },
+      allRuler: {
+        files: {
+          'dest/jQAllRangeSliders-withRuler.js': coreFiles.concat(dateFiles).concat(editFiles).concat(rulerFiles)
+        }
+      }
+    },
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> <%= pkg.version %> - ' +
@@ -151,6 +199,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-compress');
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-qunit');
@@ -171,6 +220,7 @@ module.exports = function(grunt) {
     grunt.log.ok("Running test: " + url);
   });
 
+  grunt.registerTask('bower-package', ['default', 'concat']);
   grunt.registerTask("default", ["clean", "uglify", "copy", "modifyDemo", "cssmin", "compress"]);
   grunt.registerTask('test', ['connect', 'qunit']);
   grunt.registerTask('ci', ["jshint", "test"]);
